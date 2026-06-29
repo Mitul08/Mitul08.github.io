@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mitul Sharma · Portfolio</title>
+<meta name="description" content="Mitul Sharma — Software Engineer, ML Engineer & Business Analyst. M.Tech CSE graduate from Thapar Institute with production experience at STMicroelectronics."/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --accent: #2563eb; --accent-light: #3b82f6; --accent-glow: rgba(37,99,235,0.15); --dark-bg: #0a0f1e; --dark-card: #111827; --dark-border: rgba(255,255,255,0.08); --dark-text: #f1f5f9; --dark-muted: #94a3b8; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark-bg); color: var(--dark-text); font-family: var(--font-sans, system-ui, sans-serif); font-size: 15px; line-height: 1.7; }
+  nav { position: sticky; top: 0; background: rgba(10,15,30,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--dark-border); z-index: 100; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-brand { font-size: 18px; font-weight: 500; color: var(--dark-text); letter-spacing: -0.3px; }
+  .nav-brand span { color: var(--accent-light); }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--dark-muted); font-size: 13px; text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--dark-text); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--dark-muted); border-radius: 2px; }
+  .mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--dark-border); padding: 1rem 2rem; z-index: 99; flex-direction: column; gap: 1rem; }
+  .mobile-menu a { color: var(--dark-muted); font-size: 15px; text-decoration: none; cursor: pointer; padding: 0.5rem 0; border-bottom: 1px solid var(--dark-border); }
+  .mobile-menu.open { display: flex; }
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .hero { text-align: center; padding: 5rem 2rem 4rem; max-width: 860px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: var(--accent-glow); border: 1px solid rgba(37,99,235,0.3); color: var(--accent-light); font-size: 12px; padding: 4px 14px; border-radius: 20px; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
+  .hero h1 { font-size: 42px; font-weight: 500; letter-spacing: -1px; line-height: 1.15; margin-bottom: 0.75rem; }
+  .hero h1 span { color: var(--accent-light); }
+  .typing-wrap { height: 36px; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; }
+  #typed { font-size: 20px; font-weight: 500; color: #ffffff; letter-spacing: -0.3px; }
+  .cursor { display: inline-block; width: 2px; height: 22px; background: #ffffff; margin-left: 3px; vertical-align: middle; animation: blink 0.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .hero-desc { color: var(--dark-muted); max-width: 560px; margin: 0 auto 2rem; font-size: 15px; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,99,235,0.3); }
+  .btn-outline { background: transparent; color: var(--dark-text); border: 1px solid var(--dark-border); padding: 10px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s; }
+  .btn-outline:hover { border-color: var(--accent-light); color: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,99,235,0.1); }
+  section { padding: 4rem 2rem; max-width: 860px; margin: 0 auto; }
+  .section-label { font-size: 11px; letter-spacing: 2px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .section-title { font-size: 26px; font-weight: 500; margin-bottom: 2rem; letter-spacing: -0.5px; }
+  .divider { width: 100%; height: 1px; background: var(--dark-border); margin: 0; }
+
+  /* COMPANY BADGES */
+  .co-badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; letter-spacing: 0.2px; }
+  .co-st { background: rgba(0,104,183,0.12); border: 1px solid rgba(0,104,183,0.3); color: #38bdf8; }
+  .co-ms { background: rgba(0,120,212,0.12); border: 1px solid rgba(0,120,212,0.3); color: #60a5fa; }
+  .co-thapar { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); color: #a78bfa; }
+  .co-vit { background: rgba(234,88,12,0.12); border: 1px solid rgba(234,88,12,0.3); color: #fb923c; }
+  .co-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .co-st .co-dot { background: #38bdf8; }
+  .co-ms .co-dot { background: #60a5fa; }
+  .co-thapar .co-dot { background: #a78bfa; }
+  .co-vit .co-dot { background: #fb923c; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .about-text p { color: var(--dark-muted); margin-bottom: 1rem; font-size: 14px; }
+  .about-text p strong { color: var(--dark-text); font-weight: 500; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.25rem; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+  .stat-card:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-2px); }
+  .stat-num { font-size: 22px; font-weight: 500; color: var(--accent-light); }
+  .stat-lbl { font-size: 11px; color: var(--dark-muted); margin-top: 2px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.25rem; }
+  .skill-group { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; }
+  .skill-group:hover { border-color: rgba(37,99,235,0.3); }
+  .skill-group-title { font-size: 11px; letter-spacing: 1px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.75rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag { background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.2); color: var(--dark-text); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+  .exp-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; border-left: 3px solid var(--accent); transition: box-shadow 0.2s; }
+  .exp-card:hover { box-shadow: 0 4px 24px rgba(37,99,235,0.08); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+  .exp-role { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .exp-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .exp-date { font-size: 12px; color: var(--dark-muted); background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .exp-project { font-size: 13px; font-weight: 500; color: var(--dark-text); margin: 1rem 0 0.4rem; border-left: 2px solid var(--accent-light); padding-left: 10px; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { color: var(--dark-muted); font-size: 13px; padding: 4px 0 4px 16px; position: relative; line-height: 1.6; }
+  .exp-bullets li::before { content: "·"; position: absolute; left: 0; color: var(--accent-light); font-size: 18px; line-height: 1.3; }
+  .badge-ts { display: inline-block; background: rgba(234,179,8,0.12); border: 1px solid rgba(234,179,8,0.3); color: #fbbf24; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle; }
+  .proj-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.75rem; margin-bottom: 1.5rem; transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s; }
+  .proj-card:hover { border-color: rgba(37,99,235,0.5); box-shadow: 0 8px 32px rgba(37,99,235,0.12); transform: translateY(-3px); }
+  .proj-card-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+  .proj-icon { width: 44px; height: 44px; background: var(--accent-glow); border: 1px solid rgba(37,99,235,0.25); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
+  .proj-card:hover .proj-icon { background: rgba(37,99,235,0.25); }
+  .proj-icon svg { width: 22px; height: 22px; stroke: var(--accent-light); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .proj-header-text { flex: 1; }
+  .proj-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .proj-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--dark-border); color: var(--dark-muted); font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+  .proj-story { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .proj-story-block { background: rgba(255,255,255,0.02); border: 1px solid var(--dark-border); border-radius: 8px; padding: 0.85rem; }
+  .proj-story-label { font-size: 10px; letter-spacing: 1.5px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .proj-story-text { font-size: 12px; color: var(--dark-muted); line-height: 1.6; }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .cert-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .cert-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(37,99,235,0.12); }
+  .cert-badge { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cert-title { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--dark-text); }
+  .cert-issuer { color: var(--accent-light); font-size: 12px; }
+  .cert-date { color: var(--dark-muted); font-size: 11px; margin-top: 2px; }
+  .cert-view { font-size: 10px; color: var(--accent-light); margin-top: 4px; }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .edu-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; }
+  .edu-card:hover { border-color: rgba(37,99,235,0.3); }
+  .edu-degree { font-size: 13px; font-weight: 500; color: var(--dark-text); margin-bottom: 6px; }
+  .edu-inst { font-size: 12px; margin: 4px 0; }
+  .edu-meta { color: var(--dark-muted); font-size: 11px; margin-top: 6px; }
+  .avail-banner { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .avail-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,0.2)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0.08)} }
+  .avail-text { font-size: 13px; color: var(--dark-text); }
+  .avail-text span { color: var(--dark-muted); font-size: 12px; margin-left: 6px; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .contact-item { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; transition: border-color 0.2s, transform 0.2s; text-decoration: none; }
+  .contact-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .contact-icon { width: 40px; height: 40px; background: var(--accent-glow); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 20px; height: 20px; stroke: var(--accent-light); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-lbl { font-size: 11px; color: var(--dark-muted); }
+  .contact-val { font-size: 13px; font-weight: 500; color: var(--dark-text); }
+  footer { text-align: center; padding: 2rem; border-top: 1px solid var(--dark-border); color: var(--dark-muted); font-size: 13px; }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.75rem; }
+  .footer-links a { color: var(--dark-muted); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent-light); }
+  @media(max-width:640px){ .about-grid,.contact-grid,.edu-grid{ grid-template-columns:1fr; } .hero h1{ font-size:28px; } .proj-story{ grid-template-columns:1fr; } .nav-links{ display:none; } .nav-hamburger{ display:flex; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">M<span>.</span>Sharma</div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+    <a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a>
+    <a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a>
+    <a onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Projects</a>
+    <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="closeMenu();document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+  <a onclick="closeMenu();document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a>
+  <a onclick="closeMenu();document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a>
+  <a onclick="closeMenu();document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Projects</a>
+  <a onclick="closeMenu();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+</div>
+
+<div class="hero fade-up">
+  <div class="hero-badge">Open to opportunities · Available to relocate anywhere in India</div>
+  <h1>Hi, I'm <span>Mitul Sharma</span></h1>
+  <div class="typing-wrap"><span id="typed"></span><span class="cursor"></span></div>
+  <p class="hero-desc">M.Tech CSE graduate from Thapar Institute with 1 year at STMicroelectronics, where I built two Python tools for SoC architecture teams, both filed as internal trade secrets.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">View my work</button>
+    <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="about" class="fade-up">
+  <div class="section-label">About me</div>
+  <div class="section-title">Who I am</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Python developer and engineer</strong> with production experience at STMicroelectronics, where I built two tools that replaced manual workflows entirely, both filed as internal trade secrets.</p>
+      <p>When I'm not at my desk, I'm on the pickleball court, running, hitting the gym, or ice skating. <strong>A competitive athlete who brings the same drive and discipline to engineering.</strong></p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">1 yr</div><div class="stat-lbl">Industry experience at ST</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">Trade secrets filed at ST</div></div>
+      <div class="stat-card"><div class="stat-num">OR-Tools</div><div class="stat-lbl">Production optimization</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">Industry certifications</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills" class="fade-up">
+  <div class="section-label">Technical skills</div>
+  <div class="section-title">What I work with</div>
+  <div class="skills-grid">
+    <div class="skill-group"><div class="skill-group-title">Languages</div><div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">SQL</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Data & ML</div><div class="skill-tags"><span class="skill-tag">Pandas</span><span class="skill-tag">NumPy</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">OpenCV</span><span class="skill-tag">Matplotlib</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Optimization</div><div class="skill-tags"><span class="skill-tag">OR-Tools CP-SAT</span><span class="skill-tag">Constraint programming</span><span class="skill-tag">Combinatorial optimization</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Automation</div><div class="skill-tags"><span class="skill-tag">openpyxl</span><span class="skill-tag">BeautifulSoup</span><span class="skill-tag">Requests</span><span class="skill-tag">Selenium</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Tools & DB</div><div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">Linux</span><span class="skill-tag">MySQL</span><span class="skill-tag">Jupyter</span><span class="skill-tag">VS Code</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Core CS</div><div class="skill-tags"><span class="skill-tag">OOP</span><span class="skill-tag">DBMS</span><span class="skill-tag">Operating Systems</span></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experience" class="fade-up">
+  <div class="section-label">Experience</div>
+  <div class="section-title">Where I've worked</div>
+
+  <div class="exp-card">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Project Trainee · Python Developer & Optimization Engineer</div>
+        <div class="exp-meta">
+          <span class="co-badge co-st"><span class="co-dot"></span>STMicroelectronics</span>
+          <span style="color:var(--dark-muted);font-size:12px;">Noida, India</span>
+        </div>
+      </div>
+      <div class="exp-date">Jul 2025 – Jun 2026</div>
+    </div>
+    <div class="exp-project">SYSCONF Register Automation Framework <span class="badge-ts">🏅 Trade Secret · ST 2025</span></div>
+    <ul class="exp-bullets">
+      <li>Eliminated a fully manual, error-prone register documentation workflow across 10+ SoC instances. Built an end-to-end Python framework that auto-generates template-compliant SYSCONF workbooks from a single centralized Excel input.</li>
+      <li>Handles offset calculation, PERMUX expansion, and multi-instance output in one command. Adopted in production by the SoC architecture team and filed as an internal trade secret at STMicroelectronics (2025).</li>
+    </ul>
+    <div class="exp-project">IP-to-Bridge Allocation Optimizer <span class="badge-ts">🏅 Trade Secret · ST 2026</span></div>
+    <ul class="exp-bullets">
+      <li>Built a constraint optimization engine using Google OR-Tools CP-SAT to solve SoC IP-to-bridge allocation under real hardware constraints: bandwidth, slot capacity, protocol compatibility, frequency matching, and split-distribution rules.</li>
+      <li>Two-phase solver design: Phase A finds the minimum bridges required; Phase B enumerates all valid allocations using no-good constraints, giving architects multiple feasible configurations to evaluate.</li>
+      <li>Delivered with Excel-driven input, fail-fast validation, and a structured output workbook with bridge utilization and balance metrics. Filed as an internal trade secret at STMicroelectronics (2026).</li>
+    </ul>
+  </div>
+
+  <div class="exp-card" style="border-left-color:#6366f1;">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Mentee</div>
+        <div class="exp-meta">
+          <span class="co-badge co-ms"><span class="co-dot"></span>Microsoft</span>
+          <span style="color:var(--dark-muted);font-size:12px;">Mentorship Program · Remote</span>
+        </div>
+      </div>
+      <div class="exp-date">May 2022 – Jun 2022</div>
+    </div>
+    <ul class="exp-bullets" style="margin-top:0.75rem;">
+      <li>Selected into Microsoft's mentorship program and paired directly with Microsoft engineers for focused sessions on industry engineering practices, code quality, and responsible AI.</li>
+      <li>Built a real-time Face Anonymization System as the program capstone: full video pipeline in Python and OpenCV covering frame splitting, Haar cascade face detection, Gaussian blur ROI masking, and video reassembly. Designed for privacy-critical scenarios including journalism, legal evidence, and victim identity protection.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projects" class="fade-up">
+  <div class="section-label">Projects</div>
+  <div class="section-title">What I've built</div>
+
+  <div class="proj-card">
+    <div class="proj-card-header">
+      <div class="proj-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div class="proj-header-text">
+        <div class="proj-title">SYSCONF Register Automation Framework <span class="badge-ts">🏅 Trade Secret · ST 2025</span></div>
+        <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">openpyxl</span><span class="proj-tag">Excel automation</span><span class="proj-tag">SoC architecture</span><span class="proj-tag">Template generation</span></div>
+      </div>
+    </div>
+    <div class="proj-story">
+      <div class="proj-story-block"><div class="proj-story-label">The problem</div><div class="proj-story-text">SoC architecture teams were manually filling register definition workbooks across 10+ chip instances. A slow, error-prone process with no consistency guarantee.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I built</div><div class="proj-story-text">An end-to-end Python framework that reads a single centralized Excel input and auto-generates fully formatted, template-compliant SYSCONF workbooks, handling PERMUX expansion, offset calculation, and multi-instance output in one command.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">The outcome</div><div class="proj-story-text">Replaced the manual workflow entirely. Adopted in production by the SoC architecture team and filed as an internal trade secret at STMicroelectronics, recognized as IP worth protecting.</div></div>
+    </div>
+  </div>
+
+  <div class="proj-card">
+    <div class="proj-card-header">
+      <div class="proj-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h8M6 8v8M18 8v8M8 18h8"/></svg></div>
+      <div class="proj-header-text">
+        <div class="proj-title">IP-to-Bridge Allocation Optimizer <span class="badge-ts">🏅 Trade Secret · ST 2026</span></div>
+        <div class="proj-tags"><span class="proj-tag">OR-Tools CP-SAT</span><span class="proj-tag">Python</span><span class="proj-tag">Pandas</span><span class="proj-tag">Constraint programming</span><span class="proj-tag">SoC design</span></div>
+      </div>
+    </div>
+    <div class="proj-story">
+      <div class="proj-story-block"><div class="proj-story-label">The problem</div><div class="proj-story-text">Mapping SoC IP blocks to bridge resources manually couldn't guarantee constraint satisfaction across bandwidth limits, slot capacity, protocol compatibility, and frequency matching simultaneously.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I built</div><div class="proj-story-text">A two-phase constraint solver using Google OR-Tools CP-SAT. Phase A finds the minimum number of bridges needed. Phase B uses no-good constraints to enumerate every unique valid allocation, giving architects a full set of feasible configurations to evaluate.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">The outcome</div><div class="proj-story-text">Replaced the manual mapping process entirely. Delivered with Excel-driven input, fail-fast validation, and a structured output workbook with bridge utilization and balance metrics. Filed as a trade secret at STMicroelectronics (2026).</div></div>
+    </div>
+  </div>
+
+  <div class="proj-card">
+    <div class="proj-card-header">
+      <div class="proj-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.5-1.5 4.5-3 6l-1 5H9l-1-5C6.5 13.5 5 11.5 5 9a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
+      <div class="proj-header-text">
+        <div class="proj-title">Brain Tumor Detection · CNN</div>
+        <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">TensorFlow/Keras</span><span class="proj-tag">OpenCV</span><span class="proj-tag">CNN</span><span class="proj-tag">Medical imaging</span></div>
+      </div>
+    </div>
+    <div class="proj-story">
+      <div class="proj-story-block"><div class="proj-story-label">The problem</div><div class="proj-story-text">Classifying brain MRI scans for tumor presence requires precision, and limited labeled medical data makes training a reliable model genuinely hard.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I built</div><div class="proj-story-text">A convolutional neural network trained on brain MRI scans with data augmentation and normalization techniques to handle the small dataset size without overfitting.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I learned</div><div class="proj-story-text">How to work with real-world constraints in ML: limited data, high-stakes classification, and the trade-offs between model complexity and generalization on medical imaging tasks.</div></div>
+    </div>
+  </div>
+
+  <div class="proj-card">
+    <div class="proj-card-header">
+      <div class="proj-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <div class="proj-header-text">
+        <div class="proj-title">Image Steganography · Pixel Order Differencing</div>
+        <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">NumPy</span><span class="proj-tag">OpenCV</span><span class="proj-tag">Steganography</span><span class="proj-tag">Image processing</span></div>
+      </div>
+    </div>
+    <div class="proj-story">
+      <div class="proj-story-block"><div class="proj-story-label">The problem</div><div class="proj-story-text">How do you hide an entire image inside another image in a way that's visually imperceptible and fully recoverable?</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I built</div><div class="proj-story-text">An image-in-image steganography system using the Pixel Order Differencing technique, embedding a secret image within a cover image by exploiting subtle pixel value differences invisible to the human eye.</div></div>
+      <div class="proj-story-block"><div class="proj-story-label">What I learned</div><div class="proj-story-text">The mathematics of perceptual thresholds in image data, and how low-level pixel manipulation can encode meaningful information without corrupting the host image's visual integrity.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="certifications" class="fade-up">
+  <div class="section-label">Certifications</div>
+  <div class="section-title">Credentials</div>
+  <p style="color:var(--dark-muted);font-size:13px;margin-bottom:1.5rem;">Click any card to view the certificate.</p>
+  <div class="cert-grid">
+    <a class="cert-card" href="https://drive.google.com/file/d/1gvaOIIi5sggVVnM23DzO9QtayEwao9qK/view?usp=sharing" target="_blank">
+      <div class="cert-badge" style="background:rgba(0,120,212,0.12);border:1px solid rgba(0,120,212,0.3);"><svg style="width:24px;height:24px;stroke:#60a5fa;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div>
+        <div class="cert-title">Microsoft SC-900</div>
+        <div style="margin:3px 0;"><span class="co-badge co-ms" style="font-size:10px;padding:2px 7px;"><span class="co-dot"></span>Microsoft</span></div>
+        <div class="cert-date">June 2023</div>
+        <div class="cert-view">View certificate →</div>
+      </div>
+    </a>
+    <a class="cert-card" href="https://drive.google.com/file/d/1bw4LHXyFAZZ_7WoJMqEUzCD1W-W-KxZB/view?usp=sharing" target="_blank">
+      <div class="cert-badge" style="background:rgba(37,99,235,0.12);border:1px solid rgba(37,99,235,0.25);"><svg style="width:24px;height:24px;stroke:#60a5fa;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div>
+        <div class="cert-title">Python for Data Science, AI & Development</div>
+        <div style="margin:3px 0;"><span class="co-badge" style="background:rgba(30,58,138,0.15);border:1px solid rgba(30,58,138,0.35);color:#93c5fd;font-size:10px;padding:2px 7px;"><span style="width:6px;height:6px;border-radius:50%;background:#93c5fd;display:inline-block;margin-right:4px;"></span>IBM via Coursera</span></div>
+        <div class="cert-date">Feb 2024</div>
+        <div class="cert-view">View certificate →</div>
+      </div>
+    </a>
+    <a class="cert-card" href="https://drive.google.com/file/d/1h-je8HuXjEtBu5IEu--mdsSc-ypkTmim/view?usp=sharing" target="_blank">
+      <div class="cert-badge" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);"><svg style="width:24px;height:24px;stroke:#34d399;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <div>
+        <div class="cert-title">AI4ICPS · Hands-on AI for Real-world Applications</div>
+        <div style="margin:3px 0;"><span class="co-badge" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#34d399;font-size:10px;padding:2px 7px;"><span style="width:6px;height:6px;border-radius:50%;background:#34d399;display:inline-block;margin-right:4px;"></span>IIT Kharagpur & TCS iON</span></div>
+        <div class="cert-date">Dec 2023</div>
+        <div class="cert-view">View certificate →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="education" class="fade-up">
+  <div class="section-label">Education</div>
+  <div class="section-title">Academic background</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">M.Tech · Computer Science & Engineering</div>
+      <div class="edu-inst"><span class="co-badge co-thapar"><span class="co-dot"></span>Thapar Institute of Engineering & Technology</span></div>
+      <div class="edu-meta">Patiala · 2024 – 2026 · CGPA: 7.17</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">B.Tech · Computer Science & Engineering</div>
+      <div class="edu-inst"><span class="co-badge co-vit"><span class="co-dot"></span>Vellore Institute of Technology</span></div>
+      <div class="edu-meta">Vellore · 2020 – 2024 · CGPA: 7.15</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact" class="fade-up">
+  <div class="section-label">Contact</div>
+  <div class="section-title">Let's connect</div>
+  <p style="color:var(--dark-muted); margin-bottom:1.25rem; font-size:14px;">Grounded in Python, automation, and optimization, and genuinely excited by good engineering problems across any domain. Currently based in Noida, <strong style="color:var(--dark-text);">open to relocating anywhere across India.</strong></p>
+  <div class="avail-banner">
+    <div class="avail-dot"></div>
+    <div class="avail-text">Actively seeking opportunities <span>· Available to join immediately upon selection</span></div>
+  </div>
+  <div class="contact-grid">
+    <a class="contact-item" href="mailto:mitul01@yahoo.com">
+      <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <div><div class="contact-lbl">Email</div><div class="contact-val">mitul01@yahoo.com</div></div>
+    </a>
+    <a class="contact-item" href="tel:+918351945005">
+      <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.04z"/></svg></div>
+      <div><div class="contact-lbl">Phone</div><div class="contact-val">+91-8351945005</div></div>
+    </a>
+    <a class="contact-item" href="https://www.linkedin.com/in/mitulsharma/" target="_blank">
+      <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+      <div><div class="contact-lbl">LinkedIn</div><div class="contact-val">linkedin.com/in/mitulsharma</div></div>
+    </a>
+    <a class="contact-item" href="https://github.com/Mitul08" target="_blank">
+      <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+      <div><div class="contact-lbl">GitHub</div><div class="contact-val">github.com/Mitul08</div></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div>Mitul Sharma · M.Tech CSE, Thapar Institute · Noida, India · 2026</div>
+  <div class="footer-links">
+    <a href="mailto:mitul01@yahoo.com">Email</a>
+    <a href="https://www.linkedin.com/in/mitulsharma/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Mitul08" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+const roles = ["Software Engineer", "ML Engineer", "Business Analyst"];
+let ri = 0, ci = 0, deleting = false;
+const el = document.getElementById("typed");
+function randDelay(base, variance) { return base + Math.floor(Math.random() * variance) - variance/2; }
+function type() {
+  const word = roles[ri];
+  if (!deleting) {
+    el.textContent = word.slice(0, ++ci);
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+    setTimeout(type, randDelay(100, 40));
+  } else {
+    el.textContent = word.slice(0, --ci);
+    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; setTimeout(type, 300); return; }
+    setTimeout(type, randDelay(50, 20));
+  }
+}
+type();
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+</script>
+</body>
+</html>
